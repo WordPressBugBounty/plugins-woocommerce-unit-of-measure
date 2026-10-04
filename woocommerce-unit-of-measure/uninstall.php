@@ -1,14 +1,14 @@
 <?php
 /**
- * Delete WooCommerce Unit Of Measure data if plugin is deleted.
+ * Delete Unit Of Measure (UOM) for WooCommerce data when the plugin is deleted.
  *
  * @author     Bradley Davis
- * @package    WooCommerce_RRP
- * @since      1.0
+ * @package    WooCommerce_UOM
+ * @since      1.0.0
  */
 
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) :
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
-endif;
+}
 
 delete_post_meta_by_key( '_woo_uom_input' );

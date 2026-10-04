@@ -1,23 +1,24 @@
 <?php
 /**
- * The public specific functionality for WooCommerce RRP.
+ * The public facing functionality for Unit Of Measure (UOM) for WooCommerce.
  *
  * @author     Bradley Davis
- * @package    WooCommerce_RRP
- * @subpackage WooCommerce_RRP/public
+ * @package    WooCommerce_UOM
+ * @subpackage WooCommerce_UOM/public
  * @since      3.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) :
-	exit; // Exit if accessed directly.
-endif;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
- * Public parent class that outputs everything.
+ * Public class that appends the UOM after product and cart prices.
  *
  * @since 3.0.0
  */
 class WC_UOM_Public {
+
 	/**
 	 * The Constructor.
 	 *
@@ -28,72 +29,84 @@ class WC_UOM_Public {
 	}
 
 	/**
-	 * Add all filter type actions.
+	 * Register the public filters.
 	 *
 	 * @since 3.0.0
+	 *
+	 * @return void
 	 */
 	public function wc_uom_public_activate() {
 		add_filter( 'woocommerce_get_price_html', array( $this, 'wc_uom_render_output' ), 999, 2 );
-		add_filter( 'woocommerce_cart_item_price', array( $this, 'wc_uom_add_uom_to_cart_item_price' ), 10, 3 );
+		add_filter( 'woocommerce_cart_item_price', array( $this, 'wc_uom_add_uom_to_cart_item_price' ), 10, 2 );
 	}
 
 	/**
-	 * Render the output.
+	 * Append the UOM to the product price HTML.
 	 *
 	 * @since 1.0.1
-	 * @param string $price Gives access to product price html.
-	 * @return $price
+	 *
+	 * @param string          $price   The product price HTML.
+	 * @param WC_Product|null $product The product the price belongs to.
+	 * @return string The price HTML, with the UOM appended when one is set.
 	 */
-	public function wc_uom_render_output( $price ) {
-		if ( ! $price || ! $this->woo_uom_output_getter() ) :
+	public function wc_uom_render_output( $price, $product = null ) {
+		if ( ! $price || ! $product instanceof WC_Product ) {
 			return $price;
-		endif;
+		}
 
-		$price = $price . ' <span class="uom">' . esc_attr( $this->woo_uom_output_getter(), 'woocommerce-uom' ) . '</span>';
+		// The UOM is saved per parent product, so variations use the parent ID.
+		$product_id = $product->is_type( 'variation' ) ? $product->get_parent_id() : $product->get_id();
+		$uom        = $this->woo_uom_output_getter( $product_id );
+
+		if ( '' === $uom ) {
+			return $price;
+		}
+
+		return $price . ' <span class="uom">' . esc_html( $uom ) . '</span>';
+	}
+
+	/**
+	 * Append the UOM to the cart item price.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @param string $price     The cart item price HTML.
+	 * @param array  $cart_item The cart item data.
+	 * @return string The price HTML, with the UOM appended when one is set.
+	 */
+	public function wc_uom_add_uom_to_cart_item_price( $price, $cart_item ) {
+		if ( ! is_array( $cart_item ) || ! isset( $cart_item['product_id'] ) ) {
+			return $price;
+		}
+
+		$uom = $this->woo_uom_output_getter( absint( $cart_item['product_id'] ) );
+
+		if ( '' !== $uom ) {
+			$price .= ' <span class="uom">' . esc_html( $uom ) . '</span>';
+		}
 
 		return $price;
 	}
 
 	/**
-     * Add UOM to cart.php item price.
-     *
-     * @since 3.2.0
-     * @param string $price The product price.
-     * @param array $cart_item The cart item array.
-     * @param string $cart_item_key The cart item key.
-     * @return string Modified price with UOM.
-     */
-    public function wc_uom_add_uom_to_cart_item_price( $price, $cart_item, $cart_item_key ) {
-        $uom_item_id = $cart_item['product_id'];
-		$uom = $this->woo_uom_output_getter($uom_item_id);
-
-        if ( $uom ) {
-            $price .= ' <span class="uom">' . esc_attr( $uom, 'woocommerce-uom' ) . '</span>';
-        }
-
-        return $price;
-    }
-
-	/**
-	 * Get the uom from post meta for a product.
+	 * Get the UOM from post meta for a product.
 	 *
 	 * @since 3.0.3
-	 * @return string $woo_uom_output
+	 *
+	 * @param int $uom_item_id The product ID.
+	 * @return string The UOM, or an empty string when none is set.
 	 */
-    private function woo_uom_output_getter($uom_item_id = null) {
-		if (is_null($uom_item_id)) {
-			global $post;
-			$uom_item_id = $post->ID;
+	private function woo_uom_output_getter( $uom_item_id ) {
+		if ( ! $uom_item_id ) {
+			return '';
 		}
 
-        $woo_uom_output = get_post_meta( $uom_item_id, '_woo_uom_input', true );
-
-        return $woo_uom_output;
-    }
+		return (string) get_post_meta( $uom_item_id, '_woo_uom_input', true );
+	}
 }
 
 /**
- * Instantiate the class
+ * Instantiate the class.
  *
  * @since 3.0.0
  */

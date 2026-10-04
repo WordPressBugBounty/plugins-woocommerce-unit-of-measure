@@ -1,0 +1,43 @@
+# Copyright (C) 2026 Bradley Davis
+# This file is distributed under the GPLv3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Unit Of Measure (UOM) for WooCommerce 3.3.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woocommerce-unit-of-measure\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-27T12:25:55+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: woocommerce-unit-of-measure\n"
+
+#. Plugin Name of the plugin
+#: woocommerce-unit-of-measure.php
+msgid "Unit Of Measure (UOM) for WooCommerce"
+msgstr ""
+
+#. Description of the plugin
+#: woocommerce-unit-of-measure.php
+msgid "Unit Of Measure (UOM) for WooCommerce allows the user to add a unit of measure (or any text) after the price on WooCommerce products."
+msgstr ""
+
+#. Author of the plugin
+#: woocommerce-unit-of-measure.php
+msgid "Bradley Davis"
+msgstr ""
+
+#. Author URI of the plugin
+#: woocommerce-unit-of-measure.php
+msgid "https://bradley-davis.com"
+msgstr ""
+
+#: admin/class-wc-uom-admin.php:58
+msgid "Unit of Measure"
+msgstr ""
+
+#: admin/class-wc-uom-admin.php:61
+msgid "Enter your unit of measure for this product here."
+msgstr ""

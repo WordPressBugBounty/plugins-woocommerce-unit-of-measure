@@ -1,21 +1,22 @@
-=== WooCommerce Unit Of Measure ===
-Contributors: Brad Davis
+=== Unit Of Measure (UOM) for WooCommerce ===
+Contributors: brad-davis
 Tags: woocommerce, woocommerce-price
-Requires at least: 4.0
-Tested up to: 6.6.2
-Stable tag: 3.2.0
+Requires at least: 6.5
+Tested up to: 7.1
+Requires PHP: 7.4
+Stable tag: 3.3.1
 License: GPLv3 or later
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-WooCommerce Unit Of Measure allows you to add a unit of measure, or any text after the price of a WooCommerce product.
+Unit Of Measure (UOM) for WooCommerce allows you to add a unit of measure, or any text after the price of a WooCommerce product.
 
 == Description ==
-WooCommerce Unit Of Measure allows you to add a unit of measure (UOM), or any text you require after the price in WooCommerce.
+Unit Of Measure (UOM) for WooCommerce allows you to add a unit of measure (UOM), or any text you require after the price in WooCommerce.
 
 = Requires WooCommerce to be installed. =
 
 == Installation ==
-1. Upload WooCommerce Unit Of Measure to the `/wp-content/plugins/` directory
+1. Upload Unit Of Measure (UOM) for WooCommerce to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go to "Inventory" tab in the product data area and put in your unit of measure
 4. Publish or update your product
@@ -37,9 +38,25 @@ Yes you can, follow these steps:
 = Will this work with my theme? =
 Hard to say really, so many themes to test so little time.
 
+== Screenshots ==
+1. The Unit of Measure input in the Inventory tab of the product data area.
+2. The unit of measure displayed after the product price on the front end.
+
 == Changelog ==
 
-= 3.2.0 = 
+= 3.3.1 =
+* Addressed WordPress.org plugin review feedback.
+* Tested on WordPress 7.1.2
+* Tested on WooCommerce 11.1.2
+
+= 3.3.0 =
+* This plugin is now known as Unit Of Measure (UOM) for WooCommerce, its a trademark thing.
+* Security and coding standards fixes: capability check when saving the UOM, UOM output escaped with esc_html(), product resolved from the price filter instead of the global post (fixes wrong/missing UOM in loops, blocks and widgets), removed unused legacy files, WordPress Coding Standards clean up.
+* Now requires WordPress 6.5 and PHP 7.4.
+* Tested on WordPress 7.1.2
+* Tested on WooCommerce 11.1.2
+
+= 3.2.0 =
 * Tested on WordPress 6.6.2
 * Tested on WooCommerce 9.3.3
 * Feature added to display UOM text on the cart page
@@ -52,7 +69,7 @@ Hard to say really, so many themes to test so little time.
 = 3.0.3 =
 * Tested on WordPress 5.9
 * Tested on WooCommerce 6.2.0
-* Changed filter priority to fire later 
+* Changed filter priority to fire later
 
 = 3.0.2 =
 * Tested on WordPress 5.5.1
